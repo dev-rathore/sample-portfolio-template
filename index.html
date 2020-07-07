@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Portfolio</title>
+
+
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+
+
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" /> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" rel="stylesheet">
+        
+
+
+
+        <!------------------------------------ CSS Styles ------------------------------------->
+
+
+        <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            /************************ Custom Properties like CSS var *********************/
+
+            :root {
+                --fontFamily-primary: 'Source Sans Pro', sans-serif;
+                --fontFamily-secondary: 'Source Code Pro', monospace;
+                
+                --fontWeight-regular: 300;
+                --fontWeight-bold: 900;
+                
+                --color-light: #f4f2ff;
+                --color-dark: #303030;
+                --color-blue: #1B87EC;
+                
+                --fontSize-h1: 4.5rem;
+                --fontSize-h2: 3.75rem;
+                --fontSize-h3: 1.5rem;
+                --fontSize-body: 1.125rem;
+                
+                --boxShadow: 0.25em 0.25em 0.75em rgba(0,0,0,.25),
+                      0.125em 0.125em 0.25em rgba(0,0,0,.15);
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                background: var(--color-light);
+                color: var(--color-light);
+                margin: 0;
+                font-family: var(--fontFamily-primary);
+                font-size: var(--fontSize-body);
+                line-height: 1.6;
+            }
+
+            section {
+                padding: 5em 2em;
+            }
+
+            img {
+                display: block;
+                max-width: 100%;
+            }
+
+            strong { font-weight: var(--fontWeight-bold) }
+
+            :focus {
+                outline: 3px solid var(--color-blue);
+                outline-offset: 3px;
+            }
+
+            h1, h2, h3 {
+                line-height: 1;
+                margin: 0;
+            }
+
+            h1 { font-size: var(--fontSize-h1) }
+            h2 { font-size: var(--fontSize-h2) }
+            h3 { font-size: var(--fontSize-h3) }
+
+
+            .section-title {
+                margin-bottom: .25em;
+            }
+
+            .intro-title {
+                color: var(--color-dark);
+                font-weight: var(--fontWeight-regular);
+            }
+
+            .intro-title strong {
+                display: block;
+            }
+
+            .section-subtitle {
+                margin: 0;
+                color: var(--color-dark);
+                font-size: var(--fontSize-h3);
+            }
+
+            .intro-subtitle,
+            .about-subtitle {
+                background: var(--color-blue);
+                color: var(--color-light);
+                padding: .25em 1em;
+                font-family: var(--fontFamily-secondary);
+                margin-bottom: 1em;
+            }
+
+            .work-subtitle {
+                color: var(--color-blue);
+                font-weight: var(--fontWeight-bold);
+                margin-bottom: 2em;
+            }
+
+            /******************************************** Header ******************************************/
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                padding: 1em;
+            }
+
+            .logo {
+                max-width: 100px;
+            }
+
+            .nav {
+                position: fixed;
+                background: var(--color-dark);
+                color: var(--color-light);
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;   
+                transform: translateX(100%);
+                transition: transform 250ms cubic-bezier(.5, 0, .5, 1);
+            }
+
+            .nav-list {
+                list-style: none;
+                display: flex;
+                height: 100%;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav-link {
+                color: inherit;
+                font-weight: var(--fontWeight-bold);
+                font-size: var(--fontSize-h2);
+                text-decoration: none;
+            }
+
+            .nav-link:hover {
+                color: var(--color-blue);
+            }
+
+            .nav-toggle {
+                padding: .5em;
+                background: transparent;
+                border: 0;
+                cursor: pointer;
+                position: absolute;
+                right: 1em;
+                top: 1em;
+                z-index: 1000;
+            }
+
+            .nav-open .nav {
+                transform: translateX(0);
+            }
+
+            .nav-open .nav-toggle {
+                position: fixed;
+            }
+
+            .nav-open .hamburger {
+                transform: rotate(.625turn);
+            }
+
+            .nav-open .hamburger::before {
+                transform: rotate(90deg) translateX(-6px);
+            }
+
+            .nav-open .hamburger::after {
+                opacity: 0;
+            }
+
+
+
+            .hamburger {
+                display: block;
+                position: relative;
+            }
+
+            .hamburger,
+            .hamburger::before,
+            .hamburger::after {
+                background: var(--color-blue);
+                width: 2em;
+                height: 3px;
+                border-radius: 1em;
+                transition: transform 250ms ease-in-out;
+            }
+
+
+            .hamburger::before,
+            .hamburger::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+            }
+
+            .hamburger::before { top: 6px; }
+            .hamburger::after { bottom: 6px; }
+
+
+
+
+            /*********************************************  Intro Section  *****************************************/
+
+
+            .intro-img {
+                box-shadow: var(--boxShadow);
+                grid-area: img;
+                min-width: 250px;
+                position: relative;
+                z-index: 2;
+            }  
+
+            .intro {
+                display: grid;
+                grid-column-gap: 1rem;
+                grid-template-columns: 250px 400px;
+                justify-content: center;
+                grid-template-areas: 
+                    "img title"
+                    "img subtitle";
+            }
+                  
+            .intro-subtitle {
+                align-self: start;
+                grid-column: -1 / 1;
+                grid-row: 2;
+                text-align: right;
+                position: relative;
+                left: -1.5em;
+                width: calc(100% + 1.5em);
+            }
+
+
+
+
+            /*****************************************  My Services Section  ***********************************/
+
+            .my-services {
+                background-color: var(--color-dark);
+                color: var(--color-light);
+                text-align: center;
+            }
+
+            .services-title {
+                color: var(--color-blue);
+            }
+
+            .services-title::after {
+                content: '';
+                display: block;
+                width: 2em;
+                height: 1px;
+                margin: 0.5em auto 0em;
+                background: var(--color-light);
+                opacity: 0.25;
+            }
+
+            .services{
+                display: grid;
+                padding: 3rem 0 5rem;
+                grid-template-columns: 350px 350px 350px;
+                justify-content: center;
+                grid-column-gap: 2rem;
+            }
+
+
+            /************************************************* Buttons ********************************************/
+
+
+
+            .btn {
+                display: inline-block;
+                padding: .5em 2.5em;
+                background: var(--color-blue);
+                border-radius: 5px;
+                color: var(--color-light);
+                text-decoration: none;
+                font-weight: var(--fontWeight-bold);
+                transition: transform 200ms ease-in-out;
+            }
+
+            .btn:hover {
+                transform: scale(1.1);
+            }
+
+
+
+
+            /*****************************************  About Me Section  ***************************************/
+
+
+
+            .about-title {
+                grid-area: title;
+            }
+
+            .about-img {
+                grid-area: img;
+                box-shadow: var(--boxShadow);
+                position: relative;
+                z-index: 2;
+            }
+
+            .about-me{
+                color: var(--color-dark);
+                display: grid;
+                grid-template-columns: 650px 200px;
+                justify-content: center;
+                grid-template-areas: 
+                    "title img"
+                    "subtitle img"
+                    "text img";
+                grid-column-gap: 1.5rem;
+            }
+                       
+            .about-subtitle {
+                grid-column: 1 / -1;
+                grid-row: 2;
+                position: relative;
+                left: -1em;
+                width: calc(100% + 2em);
+                padding-left: 1em;
+                padding-right: calc(200px + 4em);
+            }
+                
+
+
+            /*********************************************** My Work *****************************************/
+
+
+
+            .my-work {
+                background-color: var(--color-dark);
+                color: var(--color-light);
+                text-align: center;    
+            }
+
+            .portfolio {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .portfolio-item {
+                background: var(--color-blue);
+                overflow: hidden;
+            }
+
+            .portfolio-img {
+                transition: 
+                    transform 750ms cubic-bezier(.5, 0, .5, 1),
+                    opacity 250ms linear;
+            }
+
+            .portfolio-item:focus {
+                position: relative;
+                z-index: 2;
+            }
+
+            .portfolio-img:hover,
+            .portfolio-item:focus .portfolio-img {
+                transform: scale(1.2);
+                opacity: .5;
+            }
+
+
+
+
+
+            /************************************************ footer ****************************************/
+
+
+            .footer {
+                background: #111;
+                color: var(--color-light);
+                text-align: center;
+                padding: 2.5em 0;
+                font-size: var(--fontSize-h3);
+            }
+
+            .footer a { 
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .footer-link {
+                font-weight: var(--fontWeight-bold);
+            }
+
+            .footer-link:hover,
+            .social-list-link:hover {
+                opacity: .7;
+            }
+
+            .social-list {
+                list-style: none;
+                display: flex;
+                justify-content: center;
+                margin: 2em 0 0;
+            }
+
+            .social-list-item {
+                margin: 0 2rem;
+            }
+
+
+            /**************************************** Media Query ****************************************/
+
+            @media (max-width: 1140px){
+                .services{
+                    display: grid;
+                    grid-template-columns: auto;
+                    grid-template-rows: auto auto auto;
+                    grid-row-gap: 25px;
+                }
+                .about-me{
+                    grid-template-columns: auto auto;
+                    justify-content: center;
+                    grid-template-areas: 
+                        "title img"
+                        "subtitle img"
+                        "text img";
+                }
+                .intro-img,.about-img{
+                    width: 200px;
+                }
+            }
+
+
+            @media (max-width: 800px) {
+                :root {
+                    --fontSize-h1: 3rem;
+                    --fontSize-h2: 2.25rem;
+                    --fontSize-h3: 1.25rem;
+                    --fontSize-body: 1rem;
+                }
+                .services{
+                    display: grid;
+                    grid-template-columns: 250px;
+                    grid-template-rows: auto auto auto;
+                    grid-row-gap: 25px;
+                }
+                .intro,.about-me{
+                    grid-template-columns: auto;
+                    justify-content: center;
+                    grid-row-gap: 1rem;
+                    text-align: center;
+                    grid-template-areas: 
+                        "title"
+                        "subtitle"
+                        "img"
+                        "text";
+                }
+                .intro-img,.about-img{
+                    margin:auto;
+                }
+                .about-subtitle{
+                  display: block;
+                  padding: 1rem 1rem;
+                }
+            }
+        </style>
+
+    </head>
+
+
+    <!------------------------------------- Body Section --------------------------------->
+
+    <body>
+
+
+
+        <!-------------------------------------------- Header ---------------------------------------------->
+
+
+        <header>
+            <div class="logo">
+                <i class="fa fa-chrome fa-4x" style="color: #1B87EC;"></i>
+            </div>
+            <button class="nav-toggle" aria-label="toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link">My Services</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About me</a></li>
+                    <li class="nav-item"><a href="#work" class="nav-link">My Work</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+
+
+
+        <!----------------------------------------------- Intro ---------------------------------------------->
+        
+
+        <section class="intro" id="home">
+            <h1 class="section-title intro-title">
+                Hi, I am <strong>Ethan Hunt</strong>
+            </h1>
+            <p class="section-subtitle intro-subtitle">FRONT-END DEVELOPER</p>
+            <img src="https://pbs.twimg.com/media/EZ247otXYAEyPmZ.jpg" alt="Ethan Hunt" class="intro-img">
+        </section>
+        
+        
+
+
+        <!---------------------------------------------- My Services ------------------------------------------->
+
+
+        <section class="my-services" id="services">
+            <h2 class="section-title services-title">What I do</h2>
+            <div class="services">
+                
+
+                <!-- Services Starts Here -->
+
+                <div class="service">
+                    <h3>Design + Development</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div> 
+                
+                <div class="service">
+                    <h3>E-Commerce</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div> 
+                
+                <div class="service">
+                    <h3>WordPress</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div> 
+
+
+                <!-- Services End Here -->
+
+            </div> 
+            
+            <a href="#work" class="btn">MY WORK</a>
+        </section>
+        
+        
+
+
+        <!--------------------------------------------- About Me ------------------------------------------>
+        
+
+        <section class="about-me" id="about">
+           <h2 class="section-title about-title">Who I am</h2>
+           <p class="section-subtitle about-subtitle">Designer & developer based out of NYC</p>
+           
+           <div class="about-body">
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+           </div>
+           
+           <img src="https://i.pinimg.com/originals/31/44/3c/31443cd6c72a776dfb918c62fbc84614.jpg" alt="Ethan Questioning" class="about-img">
+        </section>
+        
+
+
+
+        <!---------------------------------------------- My Work ------------------------------------------------>
+
+
+        <section class="my-work" id="work">
+            <h2 class="section-title work-title">My work</h2>
+            <p class="section-subtitle work-subtitle">A selection of my range of work</p>
+            
+            <div class="portfolio">
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507__480.jpg" alt="" class="portfolio-img">
+                </a>
+                
+               
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/160107/pexels-photo-160107.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/2058128/pexels-photo-2058128.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/1714205/pexels-photo-1714205.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/1194713/pexels-photo-1194713.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+                
+                <a href="#" class="portfolio-item">
+                    <img src="https://images.pexels.com/photos/450035/pexels-photo-450035.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" class="portfolio-img">
+                </a>
+                
+            </div>
+        </section>
+        
+        
+
+
+        <!------------------------------------------------ Footer ----------------------------------------------->
+        
+
+        <footer class="footer">
+            
+            <a href="mailto:ethan@hunt.dev" class="footer-link">ethan@hunt.dev</a>
+            <ul class="social-list">
+                <li class="social-list-item">
+                    <a class="social-list-link" href="https://codepen.io">
+                        <i class="fab fa-codepen"></i>
+                    </a>
+                </li>
+                <li class="social-list-item">
+                    <a class="social-list-link" href="http://dribbble.com">
+                        <i class="fab fa-dribbble"></i>
+                    </a>
+                </li>
+                <li class="social-list-item">
+                    <a class="social-list-link" href="https://twitter.com">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="social-list-item">
+                    <a class="social-list-link" href="https://github.com">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </footer>
+        
+        
+        <script>
+            const navToggle = document.querySelector('.nav-toggle');
+            const navLinks = document.querySelectorAll('.nav-link')
+
+            navToggle.addEventListener('click', () => {
+                document.body.classList.toggle('nav-open');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    document.body.classList.remove('nav-open');
+                })
+            })
+        </script>
+        
+    </body>
+</html>
